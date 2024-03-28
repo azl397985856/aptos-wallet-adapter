@@ -13,6 +13,7 @@ import {
 } from "@aptos-labs/ts-sdk";
 import EventEmitter from "eventemitter3";
 
+import SDKWallets from "./AIP62StandardWallets/sdkWallets";
 import { ChainIdToAnsSupportedNetworkMap, WalletReadyState } from "./constants";
 import {
   WalletAccountChangeError,
@@ -53,6 +54,7 @@ import { WalletCoreV1 } from "./LegacyWalletPlugins/WalletCoreV1";
 import {
   AptosWallet,
   getAptosWallets,
+  isWalletWithRequiredFeatureSet,
   AccountInfo as StandardAccountInfo,
   NetworkInfo as StandardNetworkInfo,
   UserResponse,
@@ -112,6 +114,8 @@ export class WalletCore extends EventEmitter<WalletCoreEvents> {
     this.scopePollingDetectionStrategy();
     // Stretegy to detect AIP-62 standard compatible wallets
     this.fetchAptosWallets();
+    // Stretegy to detect AIP-62 standard compatible SDK wallets
+    this.fetchSDKWallets();
   }
 
   private scopePollingDetectionStrategy() {
@@ -163,13 +167,30 @@ export class WalletCore extends EventEmitter<WalletCoreEvents> {
     wallets.map((wallet: AptosWallet) => {
       const standardWallet = wallet as AptosStandardWallet;
 
-      standardWallet.readyState = WalletReadyState.Installed;
       aptosStandardWallets.push(wallet);
       this.standardizeStandardWalletToPluginWalletType(standardWallet);
     });
 
     this._standard_wallets = aptosStandardWallets;
   }
+
+  private fetchSDKWallets = () => {
+    const aptosStandardWallets: AptosStandardWallet[] = [];
+
+    SDKWallets.map((wallet: any) => {
+      const sdkWallet = new wallet();
+
+      const isValid = isWalletWithRequiredFeatureSet(sdkWallet);
+      // TODO add user opt-in check
+      if (isValid) {
+        const standardWallet = sdkWallet as AptosStandardWallet;
+        standardWallet.readyState = WalletReadyState.Installed;
+        aptosStandardWallets.push(standardWallet);
+        this.standardizeStandardWalletToPluginWalletType(standardWallet);
+      }
+    });
+    this._standard_wallets = aptosStandardWallets;
+  };
 
   /**
    * To maintain support for both plugins and AIP-62 standard wallets,

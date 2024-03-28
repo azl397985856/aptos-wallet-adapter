@@ -7,6 +7,7 @@ import {
   UserResponseStatus,
   AptosSignAndSubmitTransactionOutput,
   AccountInfo as StandardAccountInfo,
+  isWalletWithRequiredFeatureSet,
 } from "@aptos-labs/wallet-standard";
 import {
   AnyRawTransaction,
