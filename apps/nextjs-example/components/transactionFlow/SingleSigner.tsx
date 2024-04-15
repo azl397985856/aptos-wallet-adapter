@@ -145,12 +145,12 @@ export default function SingleSignerTransaction({
           disabled={!sendable}
           message={"Sign and submit BCS transaction"}
         />
-        <Button
+        {/* <Button
           color={"blue"}
           onClick={onSignTransaction}
           disabled={!sendable}
           message={"Sign transaction"}
-        />
+        /> */}
         <Button
           color={"blue"}
           onClick={onSignTransactionV2}

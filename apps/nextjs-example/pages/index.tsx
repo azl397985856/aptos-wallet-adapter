@@ -38,13 +38,6 @@ export default function App() {
       <h1 className="flex justify-center mt-2 mb-4 text-4xl font-extrabold tracking-tight leading-none text-black">
         Aptos Wallet Adapter Tester ({network?.name ?? ""})
       </h1>
-      <Link
-        href="https://github.com/aptos-labs/aptos-wallet-adapter/tree/main/apps/nextjs-example"
-        target="_blank"
-        className="flex justify-center tracking-tight leading-none text-black"
-      >
-        Demo app source code
-      </Link>
       <table className="table-auto w-full border-separate border-spacing-y-8 shadow-lg bg-white border-separate">
         <tbody>
           <WalletSelect />
@@ -75,12 +68,12 @@ export default function App() {
           {connected && (
             <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
           )}
-          {connected && (
+          {/* {connected && (
             <SponsorTransaction isSendableNetwork={isSendableNetwork} />
           )}
           {connected && (
             <MultiAgentTransaction isSendableNetwork={isSendableNetwork} />
-          )}
+          )} */}
         </tbody>
       </table>
     </div>
@@ -97,14 +90,6 @@ function WalletSelect() {
           </h2>
         </Col>
         <Col border={true} />
-      </Row>
-      <Row>
-        <Col title={true}>
-          <h3>Connect a Wallet</h3>
-        </Col>
-        <Col>
-          <WalletButtons />
-        </Col>
       </Row>
       <Row>
         <Col title={true}>
