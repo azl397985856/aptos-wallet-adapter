@@ -601,7 +601,7 @@ export class WalletCore extends EventEmitter<WalletCoreEvents> {
         if (this._wallet.isAIP62Standard) {
           const { hash, ...output } =
             await this.walletStandardCore.signAndSubmitTransaction(
-              transactionInput,
+              transactionInput,signAndSubmitTransaction
               aptos,
               this._account,
               this._wallet

@@ -27,11 +27,7 @@ const WalletSelectorAntDesign = dynamic(
 );
 
 const isSendableNetwork = (connected: boolean, network?: string): boolean => {
-  return (
-    connected &&
-    (network?.toLowerCase() === Network.DEVNET.toLowerCase() ||
-      network?.toLowerCase() === Network.TESTNET.toLowerCase())
-  );
+  return true;
 };
 
 export default function App() {
